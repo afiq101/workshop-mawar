@@ -159,10 +159,6 @@ const saveCode = async () => {
     }, 1000);
   }
 };
-
-watch(fileCode, (code) => {
-  console.log(code);
-});
 </script>
 
 <template>

@@ -18,6 +18,11 @@ export default defineEventHandler(async (event) => {
     const eslint = new ESLint({
       overrideConfig: {
         extends: ["plugin:vue/vue3-recommended"],
+        parserOptions: {
+          parser: "espree",
+          ecmaVersion: 2022,
+          sourceType: "module",
+        },
       },
       useEslintrc: false,
     });
@@ -27,7 +32,11 @@ export default defineEventHandler(async (event) => {
     if (results[0].messages.length > 0) {
       const messages = results[0].messages[0];
 
-      if (messages.fatal === true) {
+      if (
+        messages.fatal === true &&
+        messages.message !=
+          "Parsing error: Cannot use keyword 'await' outside an async function"
+      ) {
         return {
           statusCode: 400,
           message: "Bad Linter Test",
